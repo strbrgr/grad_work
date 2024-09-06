@@ -2,9 +2,8 @@
 #define UNSORTED_H
 struct NodeType;
 #include "StudentType.h"
-//The StudentType is typedef'd as ItemType in StudentType.h
-class UnsortedType 
-{
+// The StudentType is typedef'd as ItemType in StudentType.h
+class UnsortedType {
 public:
   UnsortedType();
   // Constructor
@@ -23,13 +22,13 @@ public:
   // Pre:  List has been initialized.
   // Post: Function value = number of elements in list
 
-  ItemType GetItem(ItemType& item, bool& found);
+  ItemType GetItem(ItemType &item, bool &found);
   // Function: Retrieves list element whose key matches item's key (if
   //           present).
   // Pre:  List has been initialized.
   //       Key member of item is initialized.
   // Post: If there is an element someItem whose key matches
-  //       item's key, then found = true and someItem is returned;	
+  //       item's key, then found = true and someItem is returned;
   // 	 otherwise found = false and item is returned.
   //       List is unchanged.
 
@@ -57,16 +56,17 @@ public:
   // Pre:  List has been initialized and has not been changed since last call.
   //       Current position is defined.
   //       Element at current position is not last in list.
-  //	     
+  //
   // Post: Current position is updated to next position.
   //       item is a copy of element at current position.
 
   void Print();
-  //Complete this...
+  // Function: Prints name and status or empty
+  // Post: Value(s) have been sent to the stream out.
 
 private:
-  NodeType* listData;
+  NodeType *listData;
   int length;
-  NodeType* currentPos;
+  NodeType *currentPos;
 };
 #endif

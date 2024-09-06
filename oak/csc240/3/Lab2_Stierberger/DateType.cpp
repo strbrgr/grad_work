@@ -1,20 +1,15 @@
-// File DateType.cpp  contains the implementation of class DateType
 #include "DateType.h"
-#include <fstream>
-#include <iostream>
 using namespace std;
 
-// Nmber of days in each month
-static int daysInMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30,
-                            31, 30, 31};	
+// Number of days in each month
+static int daysInMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-// Nmaes of the months
-static string conversionTable[] = {"Error", "January", "February", 
-    "March", "April", "May", "June", "July", "August", "September",
-    "October", "November", "December"};
+// Names of the months
+static string conversionTable[] = {
+    "Error", "January", "February",  "March",   "April",    "May",     "June",
+    "July",  "August",  "September", "October", "November", "December"};
 
-void DateType::Initialize
-     (int newMonth, int newDay, int newYear)
+void DateType::Initialize(int newMonth, int newDay, int newYear)
 // Post: If newMonth, newDay and newYear represent a valid date,
 //       year is set to newYear;
 //       month is set to newMonth;
@@ -23,11 +18,11 @@ void DateType::Initialize
 //       first incorrect parameter.
 {
   if (newMonth < 1 || newMonth > 12)
-     throw string("Month is invalid");
+    throw string("Month is invalid");
   else if (newDay < 1 || newDay > daysInMonth[newMonth])
-     throw string("Day is invalid");
+    throw string("Day is invalid");
   else if (newYear < 1583)
-     throw string("Year is invalid");
+    throw string("Year is invalid");
   year = newYear;
   month = newMonth;
   day = newDay;
@@ -35,13 +30,7 @@ void DateType::Initialize
 int DateType::GetMonth() const
 // Accessor function for data member month.
 {
-   return month;
-}
-
-string DateType::GetMonthAsString() const
-// Returns data member as a string
-{
-  return conversionTable[month];
+  return month;
 }
 
 int DateType::GetYear() const
@@ -54,6 +43,41 @@ int DateType::GetDay() const
 // Accessor function for data member day.
 {
   return day;
+}
+
+string DateType::GetMonthAsString() const
+// Returns month as a string
+{
+  return conversionTable[month];
+}
+
+DateType DateType::Adjust(int daysAway) const
+// Pre:  Self has been initialized
+// Post: Function value = newDate daysAway from self
+{
+  int newDay = day + daysAway;
+  int newMonth = month;
+  int newYear = year;
+  bool finished = false;
+  int daysInThisMonth;
+  DateType returnDate;
+  while (!finished) {
+    daysInThisMonth = daysInMonth[newMonth];
+    if (newMonth == 2)
+      if (((newYear % 4 == 0) && !(newYear % 100 == 0)) || (newYear % 400 == 0))
+        daysInThisMonth++;
+    if (newDay <= daysInThisMonth)
+      finished = true;
+    else {
+      newDay = newDay - daysInThisMonth;
+      newMonth = (newMonth % 12) + 1;
+      if (newMonth == 1)
+        newYear++;
+    }
+  }
+
+  returnDate.Initialize(newMonth, newDay, newYear);
+  return returnDate;
 }
 
 RelationType DateType::ComparedTo(DateType aDate) const
@@ -73,38 +97,7 @@ RelationType DateType::ComparedTo(DateType aDate) const
   else if (day < aDate.day)
     return LESS;
   else if (day > aDate.day)
-    return  GREATER;
-  else return EQUAL;
-}
-
-DateType DateType::Adjust(int daysAway) const
-// Pre:  Self has been initialized
-// Post: Function value = newDate daysAway from self
-{
-  int newDay = day + daysAway;
-  int newMonth = month;
-  int newYear = year;
-  bool finished = false;
-  int daysInThisMonth;
-  DateType returnDate;
-  while (! finished)
-  {
-    daysInThisMonth = daysInMonth[newMonth];
-	 if (newMonth == 2)
-	   if (((newYear % 4 == 0) && !(newYear % 100 == 0)) 
-          || (newYear % 400 == 0))
-	     daysInThisMonth++;
-	 if (newDay <= daysInThisMonth)
-	   finished = true;
-	 else
-	 {
-	   newDay = newDay - daysInThisMonth;
-	   newMonth = (newMonth % 12) + 1;
-	   if (newMonth == 1)
-	     newYear++;
-	 }
-  }
-  
-  returnDate.Initialize(newMonth, newDay, newYear);
-  return returnDate;
+    return GREATER;
+  else
+    return EQUAL;
 }

@@ -1,31 +1,40 @@
-/*
- * PersonType.cpp
- *
- *  Created on: Jan 28, 2019
- *      Author: igt88
- */
-
 #include "PersonType.h"
 #include <iostream>
 using namespace std;
-void PersonType::Initialize(string n, DateType dob){
-	name = n;
-	birthdate = dob;
+void PersonType::Initialize(string n, DateType dob)
+// Function: Inits PersonType with a name and birthdate.
+// Pre: Name and birthdate are provided.
+// Post: PersonType initialized with name and birthdate.
+{
+  name = n;
+  birthdate = dob;
 }
 
-string PersonType::NameIs(){
-	return name;
+string PersonType::NameIs()
+// Function: Returns the name of the person.
+// Post: Name as string returned
+{
+  return name;
 }
 
-DateType PersonType::BirthdateIs(){
-	return birthdate;
+RelationType PersonType::ComparedTo(PersonType &somePerson)
+// Function: Compares self with somePerson
+// Pre: Valid PersonType is provided
+// Post: RelationType is returned
+{
+  return birthdate.ComparedTo(somePerson.birthdate);
 }
 
-RelationType PersonType::ComparedTo(PersonType& somePerson){
-	return birthdate.ComparedTo(somePerson.birthdate);
+DateType PersonType::BirthdateIs()
+// Function: Returns birthdate DateType
+// Pre: PersonType is initialized
+{
+  return birthdate;
 }
 
-void PersonType:: Print(){
-	cout << "Name: " << name << endl;
+void PersonType::Print()
+// Function: Prints the name
+// Pre: PersonType is initialized
+{
+  cout << "Name: " << name << endl;
 }
-
