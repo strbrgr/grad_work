@@ -3,40 +3,44 @@
 #include <iostream>
 using namespace std;
 
-UnsortedType::UnsortedType() { length = 0; }
+UnsortedType::UnsortedType()
+// Constructor
+{
+  length = 0;
+}
+
+void UnsortedType::MakeEmpty()
+// Function: Returns the list to the empty state.
+// Post:  List is empty.
+{
+  length = 0;
+}
 
 bool UnsortedType::IsFull() const
-// Returns true if there is no room for another ItemType
-//  on the free store; false otherwise.
+// Function:  Determines whether list is full.
+// Pre:  List has been initialized.
+// Post: Function value = (list is full)
 {
   return (length == MAX_ITEMS);
 }
 
 int UnsortedType::GetLength() const
-// Post: Number of items in the list is returned.
+// Function: Determines the number of elements in list.
+// Pre:  List has been initialized.
+// Post: Function value = number of elements in list
 {
   return length;
 }
 
-void UnsortedType::MakeEmpty()
-// Post: List is empty; all items have been deallocated.
-{
-  length = 0;
-}
-void UnsortedType::PutItem(ItemType item)
-// item is in the list; length has been incremented.
-{
-  if (!IsFull()) {
-    info[length] = item;
-    length++;
-  }
-}
-
 ItemType UnsortedType::GetItem(ItemType &item, bool &found)
-// Pre:  Key member(s) of item is initialized.
-// Post: If found, item's key matches an element's key in the
-//       list and a copy of that element has been stored in item;
-//       otherwise, item is unchanged.
+// Function: Retrieves list element whose key matches item's key (if
+//           present).
+// Pre:  List has been initialized.
+//       Key member of item is initialized.
+// Post: If there is an element someItem whose key matches
+//       item's key, then found = true and someItem is returned;
+// 	 otherwise found = false and item is returned.
+//       List is unchanged.
 {
   int location = 0;
   found = false;
@@ -56,10 +60,25 @@ ItemType UnsortedType::GetItem(ItemType &item, bool &found)
   return item;
 }
 
+void UnsortedType::PutItem(ItemType item)
+// Function: Adds item to list.
+// Pre:  List has been initialized.
+//       List is not full.
+//       item is not in list.
+// Post: item is in list.
+{
+  if (!IsFull()) {
+    info[length] = item;
+    length++;
+  }
+}
+
 void UnsortedType::DeleteItem(const ItemType item)
-// Pre:  item's key has been initialized.
-//       An element in the list has a key that matches item's.
-// Post: No element in the list has a key that matches item's.
+// Function: Deletes the element whose key matches item's key.
+// Pre:  List has been initialized.
+//       Key member of item is initialized.
+//       One and only one element in list has a key matching item's key.
+// Post: No element in list has a key matching item's key.
 {
   int location = 0;
 
@@ -71,15 +90,21 @@ void UnsortedType::DeleteItem(const ItemType item)
 }
 
 void UnsortedType::ResetList()
-// Post: Current position has been initialized.
+// Function: Initializes current position for an iteration through the list.
+// Pre:  List has been initialized.
+// Post: Current position is prior to list.
 {
   currentPos = -1;
 }
 
 ItemType UnsortedType::GetNextItem()
-// Post:  A copy of the next item in the list is returned.
-//        When the end of the list is reached, currentPos
-//        is reset to begin again.
+// Function: Gets the next element in list.
+// Pre:  List has been initialized and has not been changed since last call.
+//       Current position is defined.
+//       Element at current position is not last in list.
+//
+// Post: Current position is updated to next position.
+//       item is a copy of element at current position.
 {
   currentPos++;
   return info[currentPos];
@@ -87,6 +112,7 @@ ItemType UnsortedType::GetNextItem()
 
 void UnsortedType::Print()
 // Function: Prints contents of the list or empty list
+// post: Value has been sent to the stream out.
 {
   ResetList();
   if (length == 0) {

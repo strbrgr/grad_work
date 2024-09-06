@@ -14,6 +14,11 @@ public:
   // Function: constructor with param
   // Post: Initializes 'value' to 'x'
 
+  void Initialize(int number);
+  // Function: Init the item with a value
+  // Pre: 'number' must be a valid integer
+  // Post: Sets 'value' to 'number'
+
   int GetValue();
   // Function :Get the value of the item
   // Post: Returns the current value of the item
@@ -27,11 +32,6 @@ public:
   // Funciton: Print the item value
   // Pre: 'outStream' must be a valid output stream
   // Post: Outputs the value
-
-  void Initialize(int number);
-  // Function: Init the item with a value
-  // Pre: 'number' must be a valid integer
-  // Post: Sets 'value' to 'number'
 
 private:
   int value;
