@@ -234,11 +234,14 @@ void UnsortedType::SplitLists(UnsortedType ut, ItemType item,
   list2.ResetList();
 
   for (int i = 0; i < length; i++) {
-    ItemType temp = ut.GetNextItem().GetValue();
+    ItemType temp = ut.GetNextItem();
 
-    if (temp.GetValue() <= item.GetValue()) {
+    switch (temp.ComparedTo(item)) {
+    case LESS:
+    case EQUAL:
       list1.PutItem(temp);
-    } else {
+      break;
+    case GREATER:
       list2.PutItem(temp);
     }
   }
