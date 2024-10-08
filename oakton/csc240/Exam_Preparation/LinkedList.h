@@ -11,11 +11,14 @@ public:
   LinkedList();
   ~LinkedList();
   int GetLength() const;
-  void PutItem(ItemType item);
   void PutItemFront(ItemType item);
   void PutItemMiddle(ItemType item);
   void PutItemEnd(ItemType item);
   void DeleteItem(ItemType item);
+  void DeleteItemFront();
+  void DeleteItemEnd();
+  void DeleteItemByPosition(int position);
+
   void MakeEmpty();
   ItemType IterateOver() const;
   void ResetList();

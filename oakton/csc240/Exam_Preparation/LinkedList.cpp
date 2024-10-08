@@ -22,16 +22,6 @@ int LinkedList::GetLength() const
   return length;
 }
 
-void LinkedList::PutItem(ItemType item)
-// Inserts item at the front of the linked list.
-{
-  NodeType *newNode = new NodeType;
-  newNode->info = item;
-  newNode->next = head;
-  head = newNode;
-  length++;
-}
-
 void LinkedList::PutItemFront(ItemType item)
 // Inserts item at the front of the linked list.
 {
@@ -126,6 +116,76 @@ void LinkedList::DeleteItem(ItemType item)
   }
 }
 
+void LinkedList::DeleteItemFront() {
+  // Empty list
+  if (head == NULL) {
+    return;
+  }
+
+  // One node in list
+  if (length == 1) {
+    MakeEmpty();
+    return;
+  }
+
+  // Move head forward and delete previous head
+  NodeType *templocation = head;
+  head = head->next;
+  delete templocation;
+  length--;
+}
+
+void LinkedList::DeleteItemEnd() {
+  // Empty list
+  if (head == NULL) {
+    return;
+  }
+
+  // One node in list
+  if (head->next == NULL) {
+    delete head;
+    head = NULL;
+    length = 0;
+    return;
+  }
+
+  // Iterate to second to last element
+  NodeType *location = head;
+  NodeType *prev;
+  while (location->next != NULL) {
+    prev = location;
+    location = location->next;
+  }
+  delete location;
+  prev->next = NULL;
+  length--;
+}
+
+void LinkedList::DeleteItemByPosition(int position) {
+  // Handle edge cases
+  if (position < 0 || position >= length) {
+    return;
+  }
+
+  if (position == 0) {
+    NodeType *tempPtr = head;
+    head = head->next;
+    delete tempPtr;
+    length--;
+    return;
+  }
+
+  NodeType *location = head;
+  for (int i = 0; i < position - 1; i++) {
+    location = location->next;
+  }
+
+  NodeType *nodeToDelete = location->next;
+  location->next = nodeToDelete->next;
+  delete nodeToDelete;
+  length--;
+}
+
 void LinkedList::MakeEmpty()
 // Empties the linked list by deallocating all node memory.
 {
@@ -134,6 +194,7 @@ void LinkedList::MakeEmpty()
     tempPtr = head;
     head = head->next;
     delete tempPtr;
+    length = 0;
   }
 }
 
@@ -158,4 +219,3 @@ bool LinkedList::IsEmpty() const
 {
   return length == 0;
 }
-

@@ -2,9 +2,9 @@
 
 int main() {
   LinkedList list;
-  list.PutItem(ItemType(3));
-  list.PutItem(ItemType(3));
-  list.PutItem(ItemType(3));
-  list.PutItem(ItemType(3));
+  list.PutItemFront(ItemType(3));
+  list.PutItemFront(ItemType(3));
+  list.PutItemFront(ItemType(3));
+  list.PutItemFront(ItemType(3));
   list.Print();
 }
