@@ -1,6 +1,7 @@
 #include "LinkedList.h"
 #include "iostream"
 #include <cstddef>
+#include <optional>
 
 LinkedList::LinkedList()
 // Constructor: Initializes the linked list with an empty state.
@@ -186,16 +187,33 @@ void LinkedList::DeleteItemByPosition(int position) {
   length--;
 }
 
+std::optional<ItemType> LinkedList::FindNode(ItemType item) const {
+  if (head == NULL) {
+    std::cout << "Nope" << std::endl;
+    return std::nullopt;
+  }
+
+  NodeType *location = head;
+  while (location != NULL) {
+    if (location->info == item) {
+      return item;
+    }
+    location = location->next;
+  }
+
+  return std::nullopt;
+}
+
 void LinkedList::MakeEmpty()
 // Empties the linked list by deallocating all node memory.
 {
   while (head != NULL) {
-    NodeType *tempPtr;
-    tempPtr = head;
+    NodeType *location;
+    location = head;
     head = head->next;
-    delete tempPtr;
-    length = 0;
+    delete location;
   }
+  length = 0;
 }
 
 void LinkedList::Print() const

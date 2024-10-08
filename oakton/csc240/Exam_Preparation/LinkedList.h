@@ -1,4 +1,5 @@
 // This is an implementation of an unsorted Linked List
+#include <optional>
 typedef int ItemType;
 
 struct NodeType {
@@ -18,8 +19,10 @@ public:
   void DeleteItemFront();
   void DeleteItemEnd();
   void DeleteItemByPosition(int position);
+  std::optional<ItemType> FindNode(ItemType item) const;
 
   void MakeEmpty();
+
   ItemType IterateOver() const;
   void ResetList();
   ItemType GetNextItem();
