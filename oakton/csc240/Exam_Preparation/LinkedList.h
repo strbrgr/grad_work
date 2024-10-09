@@ -10,7 +10,10 @@ struct NodeType {
 class LinkedList {
 public:
   LinkedList();
+  LinkedList(const LinkedList &ll);
   ~LinkedList();
+  LinkedList &operator=(const LinkedList &ll);
+  LinkedList operator+(const LinkedList &ll);
   int GetLength() const;
   void PutItemFront(ItemType item);
   void PutItemMiddle(ItemType item);

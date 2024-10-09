@@ -11,10 +11,72 @@ LinkedList::LinkedList()
   length = 0;
 }
 
+LinkedList::LinkedList(const LinkedList &ll) {
+  length = 0;
+  if (head == NULL) {
+    head = NULL;
+    return;
+  }
+
+  head = new NodeType;
+  head->info = ll.head->info;
+  head->next = NULL;
+
+  NodeType *newNode = head;
+  NodeType *location = ll.head->next;
+
+  while (location != NULL) {
+    newNode->next = new NodeType;
+    newNode = newNode->next;
+
+    newNode->info = location->info;
+    newNode->next = NULL;
+
+    location = location->next;
+
+    length++;
+  }
+}
+
 LinkedList::~LinkedList()
 // Destructor: Deallocates memory by making the list empty.
 {
   MakeEmpty();
+}
+
+LinkedList &LinkedList::operator=(const LinkedList &rhs) {
+  if (this != &rhs) {
+    MakeEmpty();
+
+    if (!rhs.IsEmpty()) {
+      NodeType *location = rhs.head;
+
+      while (location != NULL) {
+        PutItemEnd(location->info);
+        location = location->next;
+      }
+    }
+  }
+  return *this;
+}
+
+LinkedList LinkedList::operator+(const LinkedList &rhs) {
+  LinkedList newList;
+  NodeType *location = this->head;
+
+  while (location != NULL) {
+    newList.PutItemEnd(location->info);
+    location = location->next;
+  }
+
+  NodeType *rhsLocation = rhs.head;
+
+  while (rhsLocation == NULL) {
+    newList.PutItemEnd(rhsLocation->info);
+    rhsLocation = rhsLocation->next;
+  }
+
+  return newList;
 }
 
 int LinkedList::GetLength() const
@@ -92,7 +154,6 @@ void LinkedList::DeleteItem(ItemType item)
 // Deletes all nodes that have an info value matching the provided item.
 // If no nodes match, the list remains unchanged.
 {
-  NodeType *templocation;
   NodeType *location = head;
   NodeType *prev;
 
