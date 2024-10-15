@@ -13,7 +13,7 @@ LinkedList::LinkedList()
 
 LinkedList::LinkedList(const LinkedList &ll) {
   length = 0;
-  if (head == NULL) {
+  if (ll.head == NULL) {
     head = NULL;
     return;
   }
@@ -21,6 +21,7 @@ LinkedList::LinkedList(const LinkedList &ll) {
   head = new NodeType;
   head->info = ll.head->info;
   head->next = NULL;
+  length++;
 
   NodeType *newNode = head;
   NodeType *location = ll.head->next;
@@ -71,12 +72,30 @@ LinkedList LinkedList::operator+(const LinkedList &rhs) {
 
   NodeType *rhsLocation = rhs.head;
 
-  while (rhsLocation == NULL) {
+  while (rhsLocation != NULL) {
     newList.PutItemEnd(rhsLocation->info);
     rhsLocation = rhsLocation->next;
   }
 
   return newList;
+}
+
+bool LinkedList::operator==(const LinkedList &rhs) const {
+  if (this->GetLength() != rhs.GetLength()) {
+    return false;
+  }
+  NodeType *lhsLocation = this->head;
+  NodeType *rhsLocation = rhs.head;
+
+  while (lhsLocation != NULL && rhsLocation != NULL) {
+    if (lhsLocation->info != rhsLocation->info) {
+      return false;
+    }
+    lhsLocation = lhsLocation->next;
+    rhsLocation = rhsLocation->next;
+  }
+
+  return true;
 }
 
 int LinkedList::GetLength() const
@@ -155,7 +174,7 @@ void LinkedList::DeleteItem(ItemType item)
 // If no nodes match, the list remains unchanged.
 {
   NodeType *location = head;
-  NodeType *prev;
+  NodeType *prev = NULL;
 
   while (location != NULL) {
     if (location->info == item) {

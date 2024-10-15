@@ -14,6 +14,7 @@ public:
   ~LinkedList();
   LinkedList &operator=(const LinkedList &ll);
   LinkedList operator+(const LinkedList &ll);
+  bool operator==(const LinkedList &ll) const;
   int GetLength() const;
   void PutItemFront(ItemType item);
   void PutItemMiddle(ItemType item);
