@@ -101,7 +101,8 @@ bool HashTable<HashedObj>::insert(const HashedObj &x) {
   return true;
 }
 
-template <typename HashedObj> bool HashTable<HashedObj>::insert(HashedObj &&x) {
+template <typename HashedObj>
+bool HashTable<HashedObj>::insert(HashedObj &&x, ) {
   int currentPos = findPos(x);
   if (isActive(currentPos))
     return false;
